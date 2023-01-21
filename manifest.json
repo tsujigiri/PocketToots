@@ -24,7 +24,7 @@
       "matches": ["https://getpocket.com/*"],
       "js": [
         "src/debug.js",
-        "src/PocketAnotator.js",
+        "src/PocketAnnotator.js",
         "src/pocketContentScript.js"
       ],
       "run_at": "document_start"

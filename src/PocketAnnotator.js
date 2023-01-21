@@ -1,8 +1,8 @@
 "use strict";
 
-class PocketAnotator {
-  anotate = (tootUrls) => {
-    debugOutput('Adding anotations to Pocket');
+class PocketAnnotator {
+  annotate = (tootUrls) => {
+    debugOutput('Adding annotations to Pocket');
     const box = document.createElement("div");
     box.style = 'position: fixed; bottom: 5px; left: 5px; z-index: 9999;';
     box.id = "pocket-toots-links";
@@ -18,8 +18,11 @@ class PocketAnotator {
   }
 
   clear = () => {
-    debugOutput("Removing anotations from Pocket");
-    document.getElementById('pocket-toots-links').remove();
+    debugOutput("Removing annotations from Pocket");
+    const box = document.getElementById('pocket-toots-links');
+    if (box) {
+      box.remove();
+    }
   }
 
   getItemId = () =>

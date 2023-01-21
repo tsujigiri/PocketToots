@@ -2,7 +2,7 @@
 
 browser.runtime.onMessage.addListener((message) => {
   if (message.toots) {
-    new PocketAnotator().anotate(message.toots);
+    new PocketAnnotator().annotate(message.toots);
   }
 });
 

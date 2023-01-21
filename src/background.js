@@ -20,16 +20,16 @@ function sendToots(tabs) {
   }
 }
 
-// Remove anotations from Pocket item pages.
-function clearAnotations(tabs) {
+// Remove annotations from Pocket item pages.
+function clearAnnotations(tabs) {
   for (const tab of tabs) {
     browser.tabs.executeScript(tab.id, {
-      code: 'new PocketAnotator().clear()'
+      code: 'new PocketAnnotator().clear()'
     })
   }
 }
 
-// Add anotations to Pocket /read/<ID> pages
+// Add annotations to Pocket /read/<ID> pages
 browser.history.onVisited.addListener((historyItem) => {
   if (historyItem.url.startsWith('https://getpocket.com/read/')) {
     browser.tabs
@@ -38,11 +38,11 @@ browser.history.onVisited.addListener((historyItem) => {
   }
 });
 
-// Remove anotation from Pocket /read/<ID> page.
+// Remove annotation from Pocket /read/<ID> page.
 //
 // There doesn't seem to be a way to listen to the popstate event, so we listen
 // to the title change event instead in order to have something to go by to
-// trigger clearing the anotations, when the user leaves a /read/<ID> page.
+// trigger clearing the annotations, when the user leaves a /read/<ID> page.
 browser.history.onTitleChanged.addListener((historyItem) => {
   if (
     historyItem.url.startsWith('https://getpocket.com/') &&
@@ -51,7 +51,7 @@ browser.history.onTitleChanged.addListener((historyItem) => {
     browser.tabs
       .query({ url: 'https://getpocket.com/*' })
       .then((tabs) => tabs.filter((tab) => !tab.url.startsWith('https://getpocket.com/read/')))
-      .then(clearAnotations);
+      .then(clearAnnotations);
   }
 });
 
