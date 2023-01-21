@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        padding: 1em;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.2em;
+      }
+      input {
+        display: block;
+        margin-bottom: 0.5em;
+      }
+      button {
+        display: block;
+        margin-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="mastodon-instance-url">Mastodon instance URL</label>
+      <input type="text"
+             id="mastodon-instance-url"
+             name="mastodon_instance_url"
+             placeholder="https://mastodon.social/" />
+      <button type="submit">Save</button>
+    </form>
+    <script src="../src/options.js"></script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+{
+
+  "manifest_version": 2,
+  "name": "PocketToots",
+  "version": "0.1.0",
+  "description": "Adds your Mastodon bookmarks to Pocket and displays a backlink in pocket.",
+  "icons": {
+    "48": "icons/logo-48.png"
+  },
+  "options_ui": {
+    "page": "html/options.html",
+    "browser_style": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": [
+        "src/debug.js",
+        "src/mastodonContentScript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://getpocket.com/*"],
+      "js": [
+        "src/debug.js",
+        "src/PocketAnotator.js",
+        "src/pocketContentScript.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": [
+      "src/background.js",
+      "src/BookmarkManager.js",
+      "src/debug.js",
+      "src/MastodonApi.js",
+      "src/MastodonBookmarksToPocketSyncer.js",
+      "src/MastodonStatus.js",
+      "src/PocketApi.js"
+    ],
+    "persistent": false
+  },
+  "permissions": [
+    "alarms",
+    "bookmarks",
+    "history",
+    "identity",
+    "storage",
+    "tabs",
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "pocket-toots@rausch.io"
+    }
+  }
+}
+
