@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        padding: 1em;
+        font-family: sans-serif;
+      }
+      label {
+        margin-bottom: 0.2em;
+      }
+      input {
+        margin-bottom: 0.5em;
+      }
+      button {
+        margin-top: 1em;
+      }
+      .container {
+        max-width: 30rem;
+        margin: auto;
+        text-align: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img src="../icons/logo-48.png" alt="Logo" />
+      <h1>Welcome to PocketToots</h1>
+      <p>
+      In order for the exension to work, you need to configure the Mastodon
+      instance you are on. You can always change it later in the extension
+      settings.
+      </p>
+      <form>
+        <label for="mastodon-instance-url">
+          Mastodon instance URL (e.g. "https://mastodon.social/")
+        </label>
+        <br />
+        <input type="text"
+               id="mastodon-instance-url"
+               name="mastodon_instance_url"
+               placeholder="https://mastodon.social/" />
+        <br />
+        <button type="submit">Save</button>
+      </form>
+    </div>
+    <script src="../src/options.js"></script>
+  </body>
+</html>

@@ -5,6 +5,9 @@ function saveOptions(e) {
     mastodon_instance_url: document.querySelector("#mastodon-instance-url").value
   });
   e.preventDefault();
+  if (window.location.href.indexOf("onboarding.html") > -1) {
+	window.close();
+  }
 }
 
 function restoreOptions() {
@@ -13,7 +16,9 @@ function restoreOptions() {
     .sync
     .get('mastodon_instance_url')
     .then((res) => {
-      document.querySelector("#mastodon-instance-url").value = res.mastodon_instance_url;
+      const input = document.querySelector("#mastodon-instance-url");
+      input.value = res.mastodon_instance_url || '';
+      input.focus();
     });
 }
 

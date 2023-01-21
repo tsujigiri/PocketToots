@@ -55,9 +55,22 @@ browser.history.onTitleChanged.addListener((historyItem) => {
   }
 });
 
+// Sync when bookmarks are added in Mastodon.
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.fetchBookmarks) {
     debugOutput('A new bookmark was added in Mastodon, fetching bookmarks');
     new MastodonBookmarksToPocketSyncer().run();
+  }
+});
+
+// Onboard the user on install.
+browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
+  switch (reason) {
+    case "install":
+      {
+        const url = browser.runtime.getURL("html/onboarding.html");
+        await browser.tabs.create({ url });
+      }
+      break;
   }
 });
