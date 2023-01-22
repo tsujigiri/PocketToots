@@ -19,9 +19,13 @@ async function updateMastodonAccessToken() {
 updateMastodonAccessToken();
 
 // Fetch bookmarks whenever the bookmark icon is clicked.
-document.addEventListener('click', async (element) => {
+document.addEventListener('click', (element) => {
   if (element.target.parentNode.title === 'Bookmark') {
-    browser.runtime.sendMessage({ fetchBookmarks: true });
+    // Give the server time to actualy register the bookmark.
+    window.setTimeout(
+      () => browser.runtime.sendMessage({ fetchBookmarks: true }),
+      1000
+    );
   }
 });
 
