@@ -7,8 +7,9 @@ class MastodonStatus {
   }
 
   links = () => {
-    const content = document.createElement('div');
-    content.innerHTML = this.content;
+    const parser = new DOMParser();
+    const content = parser.parseFromString(this.content, `text/html`);
+
     const links = [];
     for (const link of content.querySelectorAll('a:not(.mention)')) {
       links.push(link.href);
