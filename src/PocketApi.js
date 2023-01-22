@@ -19,7 +19,7 @@ class PocketApi {
         },
         body: JSON.stringify({
           url: url,
-          tags: 'toot',
+          tags: 'PocketToots',
           consumer_key: this.CONSUMER_KEY,
           access_token: accessToken
         })

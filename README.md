@@ -10,6 +10,8 @@ bookmarks to Pocket, it will ask you to authorize the extension. For access to
 the bookmarks, it is enough to load the Mastodon instance's page while logged
 in. The extension will pick up the API key from the page.
 
+Linkes saved to Pocket will be tagged with "PocketToots".
+
 ## Configuration
 
 After installation, you will be asked to provide the URL of the Mastodon
