@@ -17,7 +17,10 @@ class MastodonBookmarksToPocketSyncer {
         if (existingBookmarks.length > 0) {
           // If there are existing bookmarks, assume we've already seen all
           // the following bookmarks.
-          debugOutput("Found existing bookmark for status, assuming we've seen the rest.");
+          debugOutput(
+            "Found existing bookmark for status, assuming we've seen the rest.",
+            existingBookmarks
+          );
           return;
         }
 
