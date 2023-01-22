@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "PocketToots",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Adds your Mastodon bookmarks to Pocket and displays a backlink in pocket.",
   "icons": {
     "48": "icons/logo-48.png"
