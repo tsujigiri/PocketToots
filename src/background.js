@@ -1,15 +1,5 @@
 "use strict";
 
-// Repeatedly check for new Mastodon bookmarks.
-browser.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === 'sync') {
-    new MastodonBookmarksToPocketSyncer().run();
-    browser.alarms.create('sync', { delayInMinutes: 60 });
-  }
-});
-
-browser.alarms.create('sync', {});
-
 // Lookup toot URLs by Pocket item ID and send them to the content script.
 function sendToots(tabs) {
   for (const tab of tabs) {
@@ -74,3 +64,24 @@ browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
       break;
   }
 });
+
+// Sync bookmarks.
+browser.alarms.onAlarm.addListener((alarm) => {
+  switch (alarm.name) {
+    case "sync":
+      debugOutput("Syncing bookmarks");
+      new MastodonBookmarksToPocketSyncer().run();
+      break;
+  }
+});
+
+
+function setAlarm() {
+  debugOutput("Setting alarm");
+  browser.alarms.clearAll();
+  browser.alarms.create('sync', { periodInMinutes: 60 });
+}
+
+browser.runtime.onInstalled.addListener(setAlarm);
+browser.runtime.onStartup.addListener(setAlarm);
+
