@@ -1,7 +1,7 @@
 "use strict";
 
 function debugOutput(obj) {
-  if (true) {
+  if (false) {
     console.log('PocketToots:', obj);
   }
 }
