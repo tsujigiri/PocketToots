@@ -34,7 +34,7 @@ class MastodonApi {
     }
 
     const request = new Request(
-      `${instanceUrl}/api/v1/bookmarks`,
+      `${instanceUrl}/api/v1/bookmarks?limit=40`,
       {
         headers: {
           'Authorization': `Bearer ${accessToken}`
