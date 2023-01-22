@@ -34,7 +34,8 @@ class BookmarkManager {
     browser.bookmarks.create({
       parentId: folder.id,
       title: title,
-      url: url
+      url: url,
+      index: 0
     })
   }
 
