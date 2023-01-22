@@ -1,7 +1,7 @@
 "use strict";
 
-function debugOutput(str) {
+function debugOutput(obj) {
   if (true) {
-    console.log(`PocketToots: ${str}`);
+    console.log('PocketToots:', obj);
   }
 }
