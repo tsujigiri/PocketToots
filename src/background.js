@@ -33,6 +33,8 @@ browser.history.onVisited.addListener((historyItem) => {
 // There doesn't seem to be a way to listen to the popstate event, so we listen
 // to the title change event instead in order to have something to go by to
 // trigger clearing the annotations, when the user leaves a /read/<ID> page.
+//
+// TODO: try browser.webNavigation.onHistoryStateUpdated.addListener(
 browser.history.onTitleChanged.addListener((historyItem) => {
   if (
     historyItem.url.startsWith('https://getpocket.com/') &&
