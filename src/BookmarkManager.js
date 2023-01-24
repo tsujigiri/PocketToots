@@ -20,7 +20,7 @@ class BookmarkManager {
     }
 
     if (!folder) {
-      folder = await browser.bookmarks.create({ type: "folder", title: "Pocket Toots" })
+      folder = await browser.bookmarks.create({ type: "folder", title: "PocketToots" })
       await browser.storage.sync.set({ bookmarkFolderId: folder.id });
     }
 
