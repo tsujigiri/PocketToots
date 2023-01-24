@@ -29,7 +29,7 @@ class MastodonApi {
     if (!accessToken) {
       console.warn('PocketToots: Access token for Mastodon is missing. ' +
                    'It should be picked up when loading a page ' +
-                   'on you mastodon instance.');
+                   'on your mastodon instance.');
       return [];
     }
 
