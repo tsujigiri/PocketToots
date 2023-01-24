@@ -45,7 +45,7 @@ class MastodonApi {
     return fetch(request)
       .then((response) => response.json())
       .then((statuses) => {
-        debugOutput(`Received ${statuses.length} statuses from Mastodon`);
+        debugOutput(`Received ${statuses.length} statuses from Mastodon`, statuses);
         return statuses.map((s) => new MastodonStatus(s))
       })
   }

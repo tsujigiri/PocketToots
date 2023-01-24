@@ -1,7 +1,7 @@
 "use strict";
 
-function debugOutput(obj) {
+function debugOutput(...args) {
   if (false) {
-    console.log('PocketToots:', obj);
+    console.log(`PocketToots ${new Date().toJSON()}:`, ...args);
   }
 }

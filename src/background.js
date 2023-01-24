@@ -68,20 +68,34 @@ browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
 });
 
 // Sync bookmarks.
-browser.alarms.onAlarm.addListener((alarm) => {
+browser.alarms.onAlarm.addListener(async (alarm) => {
+  debugOutput("Alarm fired");
   switch (alarm.name) {
-    case "sync":
-      debugOutput("Syncing bookmarks");
-      new MastodonBookmarksToPocketSyncer().run();
+    case 'sync':
+      const lastSync = await browser.storage.local
+        .get('lastSync')
+        .then((result) => result.lastSync)
+
+      debugOutput(
+        'Last sync was',
+        Math.round((Date.now() - lastSync) / 1000 / 60),
+        'minutes ago'
+      );
+
+      if (!lastSync || lastSync < Date.now() - 1000 * 60 * 60) {
+        debugOutput("Syncing bookmarks");
+        new MastodonBookmarksToPocketSyncer().run()
+          .then(() => browser.storage.local.set({ lastSync: Date.now() }));
+      }
       break;
   }
 });
 
 
-function setAlarm() {
+async function setAlarm() {
   debugOutput("Setting alarm");
-  browser.alarms.clearAll();
-  browser.alarms.create('sync', { periodInMinutes: 60 });
+  await browser.alarms.clearAll();
+  await browser.alarms.create('sync', { when: Date.now(), periodInMinutes: 5 });
 }
 
 browser.runtime.onInstalled.addListener(setAlarm);
