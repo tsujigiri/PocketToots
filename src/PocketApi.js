@@ -8,6 +8,7 @@ class PocketApi {
 
   add = async (url) => {
     debugOutput(`Adding ${url} to Pocket`);
+
     const accessToken = await this.getAccessToken();
     const request = new Request(
       "https://getpocket.com/v3/add",
@@ -25,7 +26,20 @@ class PocketApi {
         })
       }
     );
-    return fetch(request).then((response) => response.json())
+    const response = await fetch(request);
+
+    debugOutput('Response from Pocket', response);
+
+    switch (response.status) {
+      case 200:
+        return response.json();
+        break;
+      case 401:
+        return this.authorize().then(() => this.add(url));
+        break;
+      default:
+        return Promise.reject(`Unexpected response from Pocket: ${response.status}`);
+    }
   }
 
   getAccessToken = () =>
@@ -36,18 +50,17 @@ class PocketApi {
 
   validateAccessToken = (accessToken) => {
     if (!accessToken) {
-      this.authorize()
-        .then(this.storeAccessToken)
+      accessToken = this.authorize()
     }
 
     return accessToken;
   }
 
-  authorize = () => {
-    return this.getRequestToken()
+  authorize = () =>
+    this.getRequestToken()
       .then(this.authorizeWithPocket)
       .then(this.fetchAccessToken)
-  }
+      .then(this.storeAccessToken)
 
   getRequestToken = () => {
     const request = new Request(
@@ -101,7 +114,10 @@ class PocketApi {
       .then((json) => json.access_token)
   }
 
-  storeAccessToken = (accessToken) =>
-    browser.storage.local.set({ pocket_access_token: accessToken })
+  storeAccessToken = async (accessToken) => {
+    await browser.storage.local.set({ pocket_access_token: accessToken });
+
+    return accessToken;
+  }
 }
 
