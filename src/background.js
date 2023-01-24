@@ -4,7 +4,7 @@
 function sendToots(tabs) {
   for (const tab of tabs) {
     new BookmarkManager()
-      .findBookmarksByTitle(tab.url.split('/').pop())
+      .findBookmarksByTitle(tab.url.split("/").pop())
       .then((bookmarks) => bookmarks.map((b) => b.url))
       .then((urls) => browser.tabs.sendMessage(tab.id, { toots: urls }));
   }
@@ -14,16 +14,16 @@ function sendToots(tabs) {
 function clearAnnotations(tabs) {
   for (const tab of tabs) {
     browser.tabs.executeScript(tab.id, {
-      code: 'new PocketAnnotator().clear()'
+      code: "new PocketAnnotator().clear()"
     })
   }
 }
 
 // Add annotations to Pocket /read/<ID> pages
 browser.history.onVisited.addListener((historyItem) => {
-  if (historyItem.url.startsWith('https://getpocket.com/read/')) {
+  if (historyItem.url.startsWith("https://getpocket.com/read/")) {
     browser.tabs
-      .query({ url: 'https://getpocket.com/read/*'})
+      .query({ url: "https://getpocket.com/read/*"})
       .then(sendToots)
   }
 });
@@ -37,12 +37,12 @@ browser.history.onVisited.addListener((historyItem) => {
 // TODO: try browser.webNavigation.onHistoryStateUpdated.addListener(
 browser.history.onTitleChanged.addListener((historyItem) => {
   if (
-    historyItem.url.startsWith('https://getpocket.com/') &&
-      !historyItem.url.startsWith('https://getpocket.com/read/')
+    historyItem.url.startsWith("https://getpocket.com/") &&
+      !historyItem.url.startsWith("https://getpocket.com/read/")
   ) {
     browser.tabs
-      .query({ url: 'https://getpocket.com/*' })
-      .then((tabs) => tabs.filter((tab) => !tab.url.startsWith('https://getpocket.com/read/')))
+      .query({ url: "https://getpocket.com/*" })
+      .then((tabs) => tabs.filter((tab) => !tab.url.startsWith("https://getpocket.com/read/")))
       .then(clearAnnotations);
   }
 });
@@ -50,7 +50,7 @@ browser.history.onTitleChanged.addListener((historyItem) => {
 // Sync when bookmarks are added in Mastodon.
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.fetchBookmarks) {
-    debugOutput('A new bookmark was added in Mastodon, fetching bookmarks');
+    debugOutput("A new bookmark was added in Mastodon, fetching bookmarks");
     new MastodonBookmarksToPocketSyncer().run();
   }
 });
@@ -70,20 +70,22 @@ browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
 // Sync bookmarks.
 browser.alarms.onAlarm.addListener(async (alarm) => {
   debugOutput("Alarm fired");
+
   switch (alarm.name) {
-    case 'sync':
+    case "sync":
       const lastSync = await browser.storage.local
-        .get('lastSync')
+        .get("lastSync")
         .then((result) => result.lastSync)
 
       debugOutput(
-        'Last sync was',
+        "Last sync was",
         Math.round((Date.now() - lastSync) / 1000 / 60),
-        'minutes ago'
+        "minutes ago"
       );
 
       if (!lastSync || lastSync < Date.now() - 1000 * 60 * 60) {
         debugOutput("Syncing bookmarks");
+
         new MastodonBookmarksToPocketSyncer().run()
           .then(() => browser.storage.local.set({ lastSync: Date.now() }));
       }
@@ -94,8 +96,9 @@ browser.alarms.onAlarm.addListener(async (alarm) => {
 
 async function setAlarm() {
   debugOutput("Setting alarm");
+
   await browser.alarms.clearAll();
-  await browser.alarms.create('sync', { when: Date.now(), periodInMinutes: 5 });
+  await browser.alarms.create("sync", { when: Date.now(), periodInMinutes: 5 });
 }
 
 browser.runtime.onInstalled.addListener(setAlarm);

@@ -11,7 +11,7 @@ class MastodonStatus {
     const content = parser.parseFromString(this.content, `text/html`);
 
     const links = [];
-    for (const link of content.querySelectorAll('a:not(.mention)')) {
+    for (const link of content.querySelectorAll("a:not(.mention)")) {
       links.push(link.href);
     }
     return links;

@@ -2,12 +2,12 @@
 
 async function updateMastodonAccessToken() {
   const instanceUrl = await browser.storage.sync
-    .get('mastodon_instance_url')
+    .get("mastodon_instance_url")
     .then((result) => result.mastodon_instance_url)
 
   if (window.location.href.startsWith(instanceUrl)) {
     const accessToken = JSON
-      .parse(document.getElementById('initial-state').innerText)
+      .parse(document.getElementById("initial-state").innerText)
       .meta
       .access_token;
 
@@ -19,8 +19,8 @@ async function updateMastodonAccessToken() {
 updateMastodonAccessToken();
 
 // Fetch bookmarks whenever the bookmark icon is clicked.
-document.addEventListener('click', (element) => {
-  if (element.target.parentNode.title === 'Bookmark') {
+document.addEventListener("click", (element) => {
+  if (element.target.parentNode.title === "Bookmark") {
     // Give the server time to actualy register the bookmark.
     window.setTimeout(
       () => browser.runtime.sendMessage({ fetchBookmarks: true }),

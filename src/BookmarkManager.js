@@ -10,7 +10,7 @@ class BookmarkManager {
       return this.folder
     }
 
-    const folderId = await browser.storage.sync.get('bookmarkFolderId')
+    const folderId = await browser.storage.sync.get("bookmarkFolderId")
       .then((result) => result.bookmarkFolderId);
 
     if (folderId) {

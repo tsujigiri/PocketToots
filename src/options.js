@@ -14,13 +14,13 @@ function restoreOptions() {
   browser
     .storage
     .sync
-    .get('mastodon_instance_url')
+    .get("mastodon_instance_url")
     .then((res) => {
       const input = document.querySelector("#mastodon-instance-url");
-      input.value = res.mastodon_instance_url || '';
+      input.value = res.mastodon_instance_url || "";
       input.focus();
     });
 }
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
+document.addEventListener("DOMContentLoaded", restoreOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);
