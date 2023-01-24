@@ -39,11 +39,6 @@ class BookmarkManager {
     })
   }
 
-  getBookmarks = async () => {
-    const folder = await this.findOrCreateFolder();
-    return browser.bookmarks.getChildren(folder.id)
-  }
-
   findBookmarksByUrl = async (url) => {
     const folder = await this.findOrCreateFolder();
     const bookmarks = await browser.bookmarks.search({ url: url })
