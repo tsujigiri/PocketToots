@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "PocketToots",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Syncs your Mastodon bookmarks to Pocket and adds a link back to the source toot.",
   "icons": {
     "48": "icons/logo-48.png"
