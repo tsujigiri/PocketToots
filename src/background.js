@@ -1,5 +1,7 @@
 "use strict";
 
+const POCKET_READ_URL_REGEX = /^https:\/\/getpocket.com\/(\w\w\/)?read\/\d+$/
+
 // Lookup toot URLs by Pocket item ID and send them to the content script.
 function sendToots(tabs) {
   for (const tab of tabs) {
@@ -21,9 +23,9 @@ function clearAnnotations(tabs) {
 
 // Add annotations to Pocket /read/<ID> pages
 browser.history.onVisited.addListener((historyItem) => {
-  if (historyItem.url.startsWith("https://getpocket.com/read/")) {
+  if (historyItem.url.match(POCKET_READ_URL_REGEX)) {
     browser.tabs
-      .query({ url: "https://getpocket.com/read/*"})
+      .query({ url: "https://getpocket.com/*read/*"})
       .then(sendToots)
   }
 });
@@ -38,11 +40,11 @@ browser.history.onVisited.addListener((historyItem) => {
 browser.history.onTitleChanged.addListener((historyItem) => {
   if (
     historyItem.url.startsWith("https://getpocket.com/") &&
-      !historyItem.url.startsWith("https://getpocket.com/read/")
+      !historyItem.url.match(POCKET_READ_URL_REGEX)
   ) {
     browser.tabs
       .query({ url: "https://getpocket.com/*" })
-      .then((tabs) => tabs.filter((tab) => !tab.url.startsWith("https://getpocket.com/read/")))
+      .then((tabs) => tabs.filter((tab) => !tab.url.match(POCKET_READ_URL_REGEX)))
       .then(clearAnnotations);
   }
 });
