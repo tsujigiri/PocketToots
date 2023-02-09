@@ -4,6 +4,9 @@ A Firefox extension that saves your [Mastodon](https://joinmastodon.org/)
 bookmarks to [Pocket](https://getpocket.com/de/saves) and adds a link back to
 the source toot ("🦣" in the bottom left corner of the Pocket item's page).
 
+You can read about the motivation for this project
+[here](https://rausch.io/posts/2023-01-23-closing-the-loop.html).
+
 In order to do this, it creates a *PocketToots* folder in your bookmarks in
 Firefox, which it uses to associate pocket items with source toots. When it
 tries to save the bookmarks to Pocket, it will ask you to authorize the
